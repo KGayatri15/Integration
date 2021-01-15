@@ -20,5 +20,5 @@ window.addEventListener('load',()=>{
            grant_type:"authorization_code"
         })
     })
-    ,then(data => console.log(data))
+    .then(data => console.log(data))
   })
