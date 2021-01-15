@@ -11,6 +11,19 @@
         console.log(window.location.href);
         var url = window.location.href;
         var headerData = url.substring(url.indexOf("?") + 1);
-       console.log(headerData);
+        var array = [];
+       array = headerData.split("=");
+       var state = array[3];
+       var access_token = array[1];
+       fetch('https://github.com/login/oauth/'+access_token,{
+           method:"POST",
+           body:JSON.stringify({
+               client_id:'9e81e0b5b9e1a677e973',
+               client_secret:'2b16a81475193f5ac75903a8477a7df30ea2471f',
+               code:access_token,
+               state:state
+           })
+       })
+       .then(data =>console.log(data.json()))
     </script>
 </html>
