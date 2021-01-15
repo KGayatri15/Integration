@@ -8,13 +8,13 @@
         <h1 style="text-align: center;">Thank You ! for signing in with Github. :-)</h1>
     </body>
     <script>
-        console.log(window.location.href);
+        console.log("URL:-" + window.location.href);
         var url = window.location.href;
         var headerData = url.substring(url.indexOf("?") + 1);
         var array = [];
-       array = headerData.split("=");
-       var state = array[3];
-       var access_token = array[1];
+       array = headerData.split("&");
+       var state = array[0].substring(array[0].indexOf("=") + 1);
+       var code = array[2];
        fetch('https://github.com/login/oauth/'+access_token,{
            method:"POST",
            body:JSON.stringify({
