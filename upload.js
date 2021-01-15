@@ -15,7 +15,7 @@ console.log(JSON.stringify({
     grant_type:"authorization_code"
  }));
 window.addEventListener('load',()=>{
-    fetch("https://www.googleapis.com/oauth2/v4/token",{
+    fetch("https://oauth2.googleapis.com/token",{
         method:"POST",
         headers:{
             'Accept':'application/json'
