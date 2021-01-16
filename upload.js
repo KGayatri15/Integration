@@ -20,7 +20,7 @@ function upload(event){
     }
     var file = document.getElementById('file');
     var reader = new FileReader();
-    reader.readAsBinaryString(file);
+   // reader.readAsBinaryString(file);
     reader.onload = function(e) {
     var contentType = file.type || 'application/octet-stream';
     var metadata = {
