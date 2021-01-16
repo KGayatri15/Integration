@@ -20,12 +20,3 @@ function GoogleSignIn(){
     var service = url + uri;
     window.location.href = service;
 }
-function buildEncodedUri(request) {
-    const response = [];
-    for (let d in request){
-        console.log(d);
-        response.push(encodeURIComponent(d) + '=' + encodeURIComponent(request[d]));
-    }
-    console.log(response);
-    return response.join('&');
-}
