@@ -31,9 +31,8 @@ function upload(event){
     })
     .then(data =>{
     console.log("File Upload successful");
-    console.log("Status:- " + data.status)
-    if(data.ok)
-        console.log(data);
+    console.log("Status:- " + data.status);
+    console.log(data);
     })
     .catch(err =>console.log("Error :- " + err))
 
