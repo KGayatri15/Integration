@@ -11,7 +11,6 @@ function GoogleSignIn(){
     var redirect_uri = "https://kgayatri15.github.io/GithubIntegration/upload.html";
     var scope = "https://www.googleapis.com/auth/drive";
     var url = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri="+redirect_uri
-    +"&prompt=consent&response_type=code&client_id="+clientId+"&scope="+scope
-    +"&access_type=offline";
+    +"&response_type=code&client_id="+clientId+"&scope="+scope +"&access_type=offline&include_granted_scopes=true";
     window.location = url;
 }
