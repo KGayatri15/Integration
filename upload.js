@@ -5,7 +5,8 @@ window.addEventListener('load',()=>{
     console.log(service);
 
 })
-function upload(){
+function upload(event){
+    event.preventDefault();
     console.log("File Upload API in progress");
     var url = 'https://www.googleapis.com/upload/drive/v2/files' ;
     const boundary = '-------314159265358979323846';
