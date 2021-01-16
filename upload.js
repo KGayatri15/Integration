@@ -1,13 +1,14 @@
-
+var service;
 window.addEventListener('load',()=>{
     var request = window.location.href;
-    var service = unbuildEndodedUri(request);
+    service = unbuildEndodedUri(request);
 })
 function upload(event){
     event.preventDefault();
     console.log("File Upload API in progress");
-    var url = 'https://www.googleapis.com/upload/drive/v2/files' ;
-    var urlParams = new URLSearchParams(window.location.search);
+    var url = 'https://www.googleapis.com/upload/drive/v2/files?' ;
+    var urlParams = new URLSearchParams(service);
+    console.log(urlParams.get('token_type') +" "+ urlParams.get('access_token'));
     var params = {
         "Authorization":urlParams.get('token_type') +" "+ urlParams.get('access_token'),
         'uploadType':'media',  
@@ -18,8 +19,8 @@ function upload(event){
     formData.append("upload_file", true);
     console.log(formData);
     console.log("filename:- " + file.name);
-    var service = url + buildEncodedUri(params);
-    fetch(service,{
+    var service_url = url + buildEncodedUri(params);
+    fetch(service_url,{
         method:'POST',
         mode:'cors',
         cache:'no-cache',
