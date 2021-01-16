@@ -12,7 +12,6 @@ function unbuildEndodedUri(request) {
         parts = urifragment[i].split("=");
         if (parts.length < 2) {
             parts.push("");
-            console.log(parts);
         }
         data[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
     } 
