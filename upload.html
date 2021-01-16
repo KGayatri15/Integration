@@ -6,7 +6,10 @@
         <script type="text/javascript" src="upload.js"></script>
     </head>
     <body>
-        <input type="file" id="file" />
-        <button onclick="upload()">Upload</button>
+        <form id="CRUD" onsubmit="upload()">
+        <label for="file">Insert a New File :-</label>
+        <input type="file" id="file" required />
+        <input type="submit" value="Upload New File">
+        </form>
     </body>
 </html>

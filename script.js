@@ -4,8 +4,6 @@ function oAuth(){
     oAuthReq.open("GET","https://github.com/login/oauth/authorize?client_id=9e81e0b5b9e1a677e973&scope=repo&state=actionspace",true);
     oAuthReq.send();
 }
-//client-id - 1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com
-//client-secret - Wtewu9zg0q8TlcPC1Des1Na1
 var params = {
     'client_id': '1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com',
     'redirect_uri': 'https://kgayatri15.github.io/GithubIntegration/upload.html',
