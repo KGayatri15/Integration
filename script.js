@@ -7,10 +7,25 @@ function oAuth(){
 //client-id - 1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com
 //client-secret - Wtewu9zg0q8TlcPC1Des1Na1
 function GoogleSignIn(){
-    var clientId = '1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com';
-    var redirect_uri = "https://kgayatri15.github.io/GithubIntegration/upload.html";
-    var scope = "https://www.googleapis.com/auth/drive";
-    var url = "https://accounts.google.com/o/oauth2/v2/auth?redirect_uri="+redirect_uri
-    +"&response_type=code&client_id="+clientId+"&scope="+scope +"&access_type=offline&include_granted_scopes=true";
-    window.location = url;
+    var params = {
+        'client_id': '1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com',
+        'redirect_uri': 'https://kgayatri15.github.io/GithubIntegration/upload.html',
+        'scope': 'https://www.googleapis.com/auth/drive',
+        'state': 'ActionSpaceEditor',
+        'include_granted_scopes': 'true',
+        'response_type': 'token'
+    };
+    var uri = buildEncodedUri(params);
+    var url = 'https://accounts.google.com/o/oauth2/v2/auth?';  
+    var service = url + uri;
+    window.location.href = service;
+}
+function buildEncodedUri(request) {
+    const response = [];
+    for (let d in request){
+        console.log(d);
+        response.push(encodeURIComponent(d) + '=' + encodeURIComponent(request[d]));
+    }
+    console.log(response);
+    return response.join('&');
 }
