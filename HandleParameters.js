@@ -16,6 +16,5 @@ function unbuildEndodedUri(request) {
         }
         data[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
     } 
-    console.log("Returning from", arguments.callee.name, data);
     return data;    
 }

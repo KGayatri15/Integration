@@ -18,16 +18,15 @@ function upload(event){
         'uploadType':'multipart',
         'Content-Type': 'multipart/mixed; boundary="' + boundary + '"'
     }
-    var file = document.getElementById('file');
+    var file = document.getElementById('file').files[0];
     var reader = new FileReader();
-   // reader.readAsBinaryString(file);
+    reader.readAsBinaryString(file);
     reader.onload = function(e) {
     var contentType = file.type || 'application/octet-stream';
     var metadata = {
-      'title': file.fileName,
+      'title': file.name,
       'mimeType': contentType
     };
-    console.log("contentType:- "+contentType +"metadata:- " +metadata);
     var base64Data = btoa(reader.result);
     var multipartRequestBody =
         delimiter + 'Content-Type: application/json\r\n\r\n' +JSON.stringify(metadata) +
