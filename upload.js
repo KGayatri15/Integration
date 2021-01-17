@@ -11,23 +11,24 @@ function upload(event){
     console.log(urlParams.get('token_type') +" "+ urlParams.get('access_token'));
     var file = document.getElementById('file').files[0];
     var params = {
-        "Authorization":urlParams.get('token_type') +" "+ urlParams.get('access_token'),
+        "Authorization": urlParams.get('token_type') +" "+ urlParams.get('access_token'),
         'uploadType':'media',
         'Content-Type':file.type,
         'Content-Length':file.size
     }
     var formData = new FormData();
-    formData.append("file", file.data,file.name);
+    formData.append("file", file);
     console.log("filename:- " + file.name);
     var service_url = url + buildEncodedUri(params);
-    fetch(service_url,{
+    fetch(url,{
         method:'POST',
         mode:'cors',
         cache:'no-cache',
         credentials:'same-origin',
+        headers:params,
         redirect:'follow',
         referrerPolicy:'no-referrer',
-        body:formData
+        body:file
     })
     .then(data =>{
     console.log("File Upload successful");
