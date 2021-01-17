@@ -10,6 +10,7 @@ var params = {
     'scope': 'https://www.googleapis.com/auth/drive',
     'state': 'ActionSpaceEditor',
     'include_granted_scopes': 'true',
+    'prompt':'consent',
     'response_type': 'token'
 };
 function GoogleSignIn(){

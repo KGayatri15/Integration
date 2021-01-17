@@ -1,7 +1,8 @@
 var service;
 window.addEventListener('load',()=>{
     var request = window.location.href;
-    service = unbuildEndodedUri(request);
+ //  var request = "https://kgayatri15.github.io/GithubIntegration/upload.html#state=ActionSpaceEditor&access_token=ya29.a0AfH6SMB69riSVYqYOSjvitF1gdvuj-eoAel9jMswVxJimOyA1a-R5ESvhZzNeKBtkWnLRd1FlNraYM3Yj2orrABNIG0C8C_8I71FplFiu-py8aP6QvuNWPwD86bNroHhL0lDU-j6bp3Ty43_8ZutPgM9QAJt_Sn-ib4g-pQ9HdIN&token_type=Bearer&expires_in=3599&scope=https://www.googleapis.com/auth/drive";
+  service = unbuildEndodedUri(request);
 })
 function upload(event){
     event.preventDefault();
