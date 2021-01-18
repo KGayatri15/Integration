@@ -2,6 +2,7 @@ function upload(event){
     event.preventDefault();
     console.log("File Upload API in progress");
     var service = unbuildEndodedUri(window.location.href);
+    console.log(window.location.href + "  "+ service);
     var urlParams = new URLSearchParams(service.search);
     console.log(urlParams.get('token_type') +" "+ urlParams.get('access_token'));
     var file = document.getElementById('file').files[0];
