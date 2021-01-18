@@ -15,5 +15,6 @@ function unbuildEndodedUri(request) {
         }
         data[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
     } 
+    console.log(data);
     return data;    
 }
