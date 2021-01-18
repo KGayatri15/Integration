@@ -11,13 +11,16 @@ function upload(event){
     var urlParams = new URLSearchParams(service);
     console.log(urlParams.get('token_type') +" "+ urlParams.get('access_token'));
     var file = document.getElementById('file').files[0];
+    var r = new FileReader();
+    r.onload = function(){ alert(r.result); };
+    
     var params = {
         "Authorization": urlParams.get('token_type') +" "+ urlParams.get('access_token'),
         'uploadType':'media',
         'Content-Type':file.type,
     }
-    var formData = new FormData();
-    formData.append("file", file);
+    // var formData = new FormData();
+    // formData.append("file", file);
     console.log("filename:- " + file.name);
     var service_url = url + buildEncodedUri(params);
     fetch(service_url,{
@@ -26,7 +29,7 @@ function upload(event){
         cache:'no-cache',
         redirect:'follow',
         referrerPolicy:'no-referrer',
-        body:file.getAsBinary()
+        body:r.readAsBinaryString(file)
     })
     .then(data =>{
     console.log("File Upload successful");
