@@ -2,28 +2,10 @@
 <html>
     <head>
         <title>Action Space Editor</title>
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="HandleParameters.js"></script>
+        <script type="text/javascript" src="app.js"></script>
     </head>
     <body>
         <h1 style="text-align: center;">Thank You ! for signing in with Github. :-)</h1>
     </body>
-    <script>
-        console.log("URL:-" + window.location.href);
-        var url = window.location.href;
-        var headerData = url.substring(url.indexOf("?") + 1);
-        var array = [];
-       array = headerData.split("&");
-       var state = array[0].substring(array[0].indexOf("=") + 1);
-       var code = array[2];
-       fetch('https://github.com/login/oauth/'+access_token,{
-           method:"POST",
-           body:JSON.stringify({
-               client_id:'9e81e0b5b9e1a677e973',
-               client_secret:'2b16a81475193f5ac75903a8477a7df30ea2471f',
-               code:access_token,
-               state:state
-           })
-       })
-       .then(data =>console.log(data.json()))
-    </script>
 </html>
