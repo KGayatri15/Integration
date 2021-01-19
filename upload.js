@@ -1,6 +1,9 @@
 var authorization;
 var files = [];
 var id;
+const boundary = '-------314159265358979323846';
+const delimiter = "\r\n--" + boundary + "\r\n";
+const close_delim = "\r\n--" + boundary + "--";
 window.addEventListener('load',()=>{
     var service = unbuildEndodedUri(window.location.href);
     authorization = service['token_type'] +" "+service['access_token'];
@@ -28,15 +31,11 @@ function upload(event){
           Promise.reject(new Error(data));
     })
     .catch(err=>Promise.reject(new Error(err)))
-    //document.getElementById('file').value = '';
 }
 function uploadFile(event){
     event.preventDefault();
     var file = document.getElementById('file').files[0];
     console.log(file.name);
-    const boundary = '-------314159265358979323846';
-    const delimiter = "\r\n--" + boundary + "\r\n";
-    const close_delim = "\r\n--" + boundary + "--";
     var contentType = file.type || 'application/octet-stream';
     var metadata = {
         'name':file.name,
@@ -123,5 +122,52 @@ function deleteFile(event){
             }
         })
         .catch(err=>console.log(err))
+    }
+}
+function updateFile(event){
+    id = files[0].id;
+    event.preventDefault();
+    var file = document.getElementById('update').files[0];
+    console.log(file.name);
+    var contentType = file.type || 'application/octet-stream';
+    var metadata = {
+        'name':file.name,
+        'mimeType':contentType
+    }
+    var reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = function(e){
+        console.log("Reader loaded");
+        var base64Data = btoa(reader.result);
+        var multipartRequestBody =
+        delimiter + 'Content-Type: application/json\r\n\r\n' +JSON.stringify(metadata) +
+        delimiter + 'Content-Type: ' + contentType + '\r\n' +  
+        'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
+    fetch('https://www.googleapis.com/upload/drive/v2/files/' + id,{
+        method:'PUT',
+        cache: 'no-cache',
+        withCredentials:true, 
+        credentials: 'include', 
+        headers:{
+            'Authorization':authorization,
+            'upload':'multipart',
+            'Content-Type': 'multipart/related; boundary=' + boundary,
+        },
+        body:multipartRequestBody
+    })
+    .then(data =>{
+        if(data.status === 200){
+          Promise.resolve(data);
+          var res = data.json();
+          console.log(res);
+        }else{
+            console.log(data.json());
+           Promise.reject(new Error(data));
+        }
+    })
+    .catch(err=>{
+        console.log(err);
+        Promise.reject(new Error(err));
+    })
     }
 }
