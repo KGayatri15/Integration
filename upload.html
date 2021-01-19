@@ -6,10 +6,12 @@
         <script type="text/javascript" src="upload.js"></script>
     </head>
     <body>
-        <form id="CRUD" onsubmit="upload(event)">
-        <label for="file">Insert a New File :-</label>
-        <input type="file" id="file" required />
-        <input type="submit" value="Upload New File">
+        <button onclick="upload(event)">Get list of all the files in the drive</button>
+        <br>
+        <form onsubmit="uploadFile(event)">
+            <input type="file" id="file" required>
+            <input type="submit" value="Upload file">
         </form>
+        <br>
     </body>
 </html>
