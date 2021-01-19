@@ -1,4 +1,6 @@
 var authorization;
+var files = [];
+var id;
 window.addEventListener('load',()=>{
     var service = unbuildEndodedUri(window.location.href);
     authorization = service['token_type'] +" "+service['access_token'];
@@ -6,7 +8,7 @@ window.addEventListener('load',()=>{
 })
 function upload(event){
     event.preventDefault();
-    var url ='https://www.googleapis.com/drive/v2/files'; //'https://www.googleapis.com/upload/drive/v2/files?' ;
+    var url ='https://www.googleapis.com/drive/v2/files';
     fetch(url,{
         method:'GET',
         cache: 'no-cache',
@@ -76,4 +78,50 @@ function uploadFile(event){
         Promise.reject(new Error(err));
     })
     }
-}  
+} 
+function searchFile(event){
+    event.preventDefault();
+    var fileName = document.getElementById('name').value;
+    var url ="https://www.googleapis.com/drive/v3/files?q=name='"+ fileName+"'";
+    fetch(url,{
+        method:'GET',
+        cache: 'no-cache',
+        withCredentials:true, 
+        credentials: 'include', 
+        headers:new Headers({
+            'Authorization':authorization,
+            'Accept':'application/json'
+        }),
+    })
+    .then(response=>response.json())
+    .then(data=>{
+       console.log(data);
+       files = data.files;
+       console.log(files);
+    })
+    .catch(err=>{return Promise.reject(new Error(err))})
+}
+function deleteFile(event){
+    console.log("There is/are " + files.length + " file similar to your search");
+    if(confirm("Are you sure you want to delete file " + files[0].name + " of mimeType: " + files[0].mimeType)){
+        id = files[0].id;
+        var url = 'https://www.googleapis.com/drive/v2/files/' + id;
+        fetch(url,{
+            method:'DELETE',
+            cache: 'no-cache',
+            withCredentials:true, 
+            credentials: 'include', 
+            headers:new Headers({
+                'Authorization':authorization,
+            }),
+        })
+        .then(response=>{
+            if(! (response.status >= 200 && response.status <= 300)){
+                new Error(response);
+            }else{
+                console.log(response);
+            }
+        })
+        .catch(err=>console.log(err))
+    }
+}

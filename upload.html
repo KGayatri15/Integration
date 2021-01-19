@@ -8,10 +8,23 @@
     <body>
         <button onclick="upload(event)">Get list of all the files in the drive</button>
         <br>
+        <br>
         <form onsubmit="uploadFile(event)">
+            <label for="file">Push a file to Google Drive</label>
             <input type="file" id="file" required>
             <input type="submit" value="Upload file">
         </form>
         <br>
+        <form onsubmit="searchFile(event)">
+          <label for="text">Note:- If you have created a file using Google Doc,Google Spreadsheet etc just enter the name or else enter name along with it's extension.Eg fileName.pdf</label>
+          <br>
+          <br>
+          Name:-<input type="text" id="name" required>
+          <input type="submit" value="Search file">
+        </form>
+        <br>
+        <label for="text">Only the files you have created can be deleted</label>
+        <br>
+        <button onclick="if(files.length > 0){deleteFile(event);}else{console.log('No file found');}">Delete File</button>
     </body>
 </html>
