@@ -17,10 +17,10 @@ function upload(event){
         cache: 'no-cache',
         withCredentials:true, 
         credentials: 'include', 
-        headers:new Headers({
+        headers:{
             'Authorization':authorization,
             'Accept':'application/json'
-        }),
+        },
     })
     .then(data =>{
         if(data.status === 200){
@@ -50,7 +50,8 @@ function uploadFile(event){
         delimiter + 'Content-Type: application/json\r\n\r\n' +JSON.stringify(metadata) +
         delimiter + 'Content-Type: ' + contentType + '\r\n' +  
         'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
-    fetch('https://www.googleapis.com/upload/drive/v3/files',{
+        var url = 'https://www.googleapis.com/upload/drive/v3/files'
+    fetch(url,{
         method:'POST',
         cache: 'no-cache',
         withCredentials:true, 
@@ -143,7 +144,8 @@ function updateFile(event){
         delimiter + 'Content-Type: application/json\r\n\r\n' +JSON.stringify(metadata) +
         delimiter + 'Content-Type: ' + contentType + '\r\n' +  
         'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
-    fetch('https://www.googleapis.com/upload/drive/v2/files/' + id,{
+    var url = 'https://www.googleapis.com/upload/drive/v2/files/' + id;
+    fetch(url,{
         method:'PUT',
         cache: 'no-cache',
         withCredentials:true, 
