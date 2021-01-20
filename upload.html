@@ -23,16 +23,16 @@
           <input type="submit" value="Search file">
         </form>
         <br>
-        <label for="text">Only the files you have created can be deleted</label>
-        <br>
-        <button onclick="if(files.length > 0){deleteFile(event);}else{console.log('No file found.');}">Delete File</button>
-        <br>
-        <br>
         <form onsubmit="if(files.length > 0){updateFile(event)}else{alert('Enter fileName in search field and click Search file or the name of the file you entered not found');}">
             <label for="update">Enter name of file in Search field,click the search button then upload file for update</label>
             <br>
             <input type="file" id="update" required>
-            <input type="submit" value="Upload file">
+            <input type="submit" value="Update file">
         </form>
+        <br>
+        <br>
+        <label for="text">Only the files you have created can be deleted</label>
+        <br>
+        <button onclick="if(files.length > 0){deleteFile(event);}else{console.log('No file found.');}">Delete File</button>  
     </body>
 </html>
