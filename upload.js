@@ -9,9 +9,13 @@ window.addEventListener('load',()=>{
     authorization = service['token_type'] +" "+service['access_token'];
     console.log("AUthorization: " + authorization);
 })
-function upload(event){
+function getFiles(event){
+    console.log("Get files")
     event.preventDefault();
-    var url ='https://www.googleapis.com/drive/v2/files';
+    var url ="https://www.googleapis.com/drive/v2/files";
+    if(document.getElementById('appData').checked)
+        url = url +"?spaces=appDataFolder";
+    console.log(url);
     fetch(url,{
         method:'GET',
         cache: 'no-cache',
@@ -33,14 +37,19 @@ function upload(event){
     .catch(err=>Promise.reject(new Error(err)))
 }
 function uploadFile(event){
+    console.log("Uploading File");
     event.preventDefault();
     var file = document.getElementById('file').files[0];
     console.log(file.name);
     var contentType = file.type || 'application/octet-stream';
     var metadata = {
         'name':file.name,
-        'mimeType':contentType
+        'title':file.name,
+        'mimeType':contentType,
     }
+    if(document.getElementById('appData').checked)
+            metadata['parents'] = ['appDataFolder'];//storing file in application Data folder
+    console.log(metadata);
     var reader = new FileReader();
     reader.readAsBinaryString(file);
     reader.onload = function(e){
@@ -80,9 +89,13 @@ function uploadFile(event){
     }
 } 
 function searchFile(event){
+    console.log("Search for a file");
     event.preventDefault();
     var fileName = document.getElementById('name').value;
     var url ="https://www.googleapis.com/drive/v3/files?q=name='"+ fileName+"'";
+    if(document.getElementById('appData').checked)
+        url = url + "&spaces=appDataFolder";
+    console.log(url);
     fetch(url,{
         method:'GET',
         cache: 'no-cache',
@@ -124,8 +137,11 @@ function deleteFile(event){
         })
         .catch(err=>console.log(err))
     }
+    document.getElementById('name').value = '',files = [],id = '';
+    console.log(files + " "+ id);
 }
 function updateFile(event){
+    console.log("Updating0 file");
     id = files[0].id;
     event.preventDefault();
     var file = document.getElementById('update').files[0];
@@ -133,8 +149,12 @@ function updateFile(event){
     var contentType = file.type || 'application/octet-stream';
     var metadata = {
         'name':file.name,
-        'mimeType':contentType
+        'title':file.name,
+        'mimeType':contentType,
     }
+    if(document.getElementById('appData').checked)
+        metadata['parents'] = ['appDataFolder'],//storing file in application Data folder
+    console.log(metadata);
     var reader = new FileReader();
     reader.readAsBinaryString(file);
     reader.onload = function(e){
