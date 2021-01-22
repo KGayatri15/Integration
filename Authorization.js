@@ -3,7 +3,7 @@ var Authorization = {
         'url':'https://accounts.google.com/o/oauth2/v2/auth?',
         'params':{
             'client_id': '1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com',
-            'redirect_uri': 'http://127.0.0.1:5500/upload.html',     //'https://kgayatri15.github.io/GithubIntegration/upload.html',
+            'redirect_uri': 'https://kgayatri15.github.io/GithubIntegration/upload.html',
             'scope': 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata',
             'state': 'ActionSpaceEditor',
             'include_granted_scopes': 'true',
