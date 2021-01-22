@@ -22,7 +22,7 @@ var Authorization = {
 }
 function oAuth(data){
     console.log("In oAuth()");
-    var service = Authorization[data]['url'] + buildEncodedUri(Authorization[data]['params']);
+    var service = Authorization[data]['url'] + HttpService.buildEncodedUri(Authorization[data]['params']);
     console.log(service);
     window.location.href = service;
 }
