@@ -1,40 +1,71 @@
 var authorization;
 var files = [];
+var folder = "root";
 var id;
-const boundary = '-------314159265358979323846';
-const delimiter = "\r\n--" + boundary + "\r\n";
-const close_delim = "\r\n--" + boundary + "--";
 window.addEventListener('load',()=>{
-    var service = unbuildEndodedUri(window.location.href);
+    var service = HttpService.unbuildEndodedUri(window.location.href);
     authorization = service['token_type'] +" "+service['access_token'];
-    console.log("AUthorization: " + authorization);
+    console.log("Authorization: " + authorization);
 })
-function getFiles(event){
-    console.log("Get files")
+var data = {
+    "OTHERS":{
+            "url":"https://www.googleapis.com/drive/v3/files",
+            "headers":{
+                'Accept':'application/json'
+            }
+    },
+    "UPLOAD":{
+            "url":"https://www.googleapis.com/upload/drive/v3/files",
+            "headers":{
+                'upload':'multipart',
+                'Content-Type': 'multipart/related; boundary=' + boundary,
+            },
+    },
+}
+function buttonClick(event,type){  
     event.preventDefault();
-    var url ="https://www.googleapis.com/drive/v2/files";
     if(document.getElementById('appData').checked)
-        url = url +"?spaces=appDataFolder";
-    console.log(url);
-    fetch(url,{
-        method:'GET',
-        cache: 'no-cache',
-        withCredentials:true, 
-        credentials: 'include', 
-        headers:{
-            'Authorization':authorization,
-            'Accept':'application/json'
-        },
-    })
-    .then(data =>{
-        if(data.status === 200){
-          Promise.resolve(data);
-          var res = data.json();
-          console.log(res);
-        }else
-          Promise.reject(new Error(data));
-    })
-    .catch(err=>Promise.reject(new Error(err)))
+        folder = "appDataFolder";
+    else
+        folder = "root";
+    var header;
+    if(type === "POST" ||type === "PUT")
+        header = data["UPLOAD"]["headers"];
+    else
+        header = data["OTHERS"]["headers"];
+    header['Authorization'] = authorization; 
+    console.log("Type:- " + type + ";header:- "+ header);
+    var response;
+    if(type==="GET"||type==="SEARCH"){
+        var url = data["OTHERS"]['url'];
+        if(folder === "appDataFolder")
+            url = url + "?spaces=appDataFolder";
+        if(type === "SEARCH"){
+            var name = document.getElementById('name').value;
+            if(url.includes('?'))
+                url = url + "&q=name='"+name+"'";
+            else
+                url = url + "?q=name='"+name+"'";
+        } 
+        console.log(url);
+        response = HttpService.fetchRequest(url,HttpService.requestBuilder("GET",header));
+    }else if(type === "POST" || type === "PUT"){
+        var url = data["UPLOAD"]['url']; 
+        if(type === "PUT"){
+            url = url + "/" + id;
+        }
+        console.log(url);
+        var file = document.getElementById('file').files[0];
+        response = HttpService.Upload(url,type,header,file,folder);
+    }else{
+        if(confirm("Are you sure you want to delete file " + files[0].name + " of mimeType: " + files[0].mimeType)){
+            var url = data["OTHERS"]['url'] + "/" + id;
+            console.log(url);
+            response = HttpService.fetchRequest(url,HttpService.requestBuilder(type,header));
+            document.getElementById('name').value = '',files = [],id = '';
+        }
+    } 
+    console.log(response);
 }
 function uploadFile(event){
     console.log("Uploading File");

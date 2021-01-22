@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Action Space Editor</title>
-        <script type="text/javascript" src="HandleParameters.js"></script>
+        <script type="text/javascript" src="HttpService.js"></script>
         <script type="text/javascript" src="upload.js"></script>
     </head>
     <body>
@@ -14,20 +14,20 @@
             <input type="radio" id="appData" name="fType" value="appData"><label for="appData">app Data Folder of ActionSpace Editor</label>
         </div>
         <br>
-        <button onclick="getFiles(event)">Get list of all the files in the drive</button>
+        <button onclick="buttonClick(event,'GET')">Get list of all the files in the drive</button>
         <br>
         <br>
-        <form onsubmit="uploadFile(event)">
+        <form onsubmit="buttonClick(event,'POST')">
             <label for="file">Push a file</label>
             <input type="file" id="file" required>
             <input type="submit" value="Upload file">
         </form>
         <br>
-        <form onsubmit="searchFile(event)">
+        <form onsubmit="buttonClick(event,'SEARCH')">
           <label for="text">Note:- If you have created a file using Google Doc,Google Spreadsheet etc just enter the name or else enter name along with it's extension.Eg fileName.pdf</label>
           <br>
           <br>
-          Search:-<input type="text" id="name" required>
+         <input type="text" id="name" placeholder="Enter fileName" required>
           <input type="submit" value="Search file">
         </form>
         <br>
