@@ -1,13 +1,12 @@
 const boundary = '-------314159265358979323846';
 const delimiter = "\r\n--" + boundary + "\r\n";
 const close_delim = "\r\n--" + boundary + "--";
-class HttpService{
-    
+class HttpService{    
     static urlBuilder(url,params){
         var service = url +"?" +HttpService.buildEncodedUri(params);
         return service;
     }
-    static async requestBuilder(method,headers,body){
+    static requestBuilder(method,headers,body){
         var request = {
             method:method,
             cache: 'no-cache',
@@ -15,18 +14,15 @@ class HttpService{
             credentials: 'include', 
             headers:headers
         }
-        if(body !== undefined)
-            request[body] = body;
-        console.log(request);
+        if(body !== undefined){
+            request['body'] = body;
+        }
         return request;
     }
-    static async Upload(url,type,header,file,folder){
-        console.log("Uploading File Data");
-        console.log(file.name);
+    static Upload(url,type,header,file,folder){
         var contentType = file.type || 'application/octet-stream';
         var metadata = {
             'name':file.name,
-            'title':file.name,
             'mimeType':contentType,
         }
         if(folder === "appDataFolder")
@@ -38,20 +34,21 @@ class HttpService{
            console.log("Reader loaded");
             var base64Data = btoa(reader.result);
             var multipartRequestBody =
-            delimiter + 'Content-Type: application/json\r\n\r\n' +JSON.stringify(metadata) +
+            delimiter + 'Content-Type: application/\r\n\r\n' + JSON.stringify(metadata) +
             delimiter + 'Content-Type: ' + contentType + '\r\n' +  
             'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
-            return HttpService.fetchRequest(url,HttpService.requestBuilder(type,header,multipartRequestBody));
+            return (HttpService.fetchRequest(url,HttpService.requestBuilder(type,header,multipartRequestBody)));
        }
     }
     static async fetchRequest(url,request){
-    var response;
-    await  fetch(url,request)
+    console.log("URL ;-" + url + ";Request:- " + request);
+    await fetch(url,request)
            .then(response=>response.json())
            .then(data=>{
+               console.log(data);
                 if(!data.errors){
-                    console.log(data);
-                    response = data;
+                    if(search){files = data.files;if(files.length > 0){id = files[0].id;}}
+                    return data;
                 }else{
                     console.log(data.errors);
                 }
@@ -59,8 +56,6 @@ class HttpService{
             .catch(err=>{
                 console.log("Failed to make a request due to " + err);
             })
-    if(response)
-            return response;
     }
     static buildEncodedUri(request) {
         const response = [];

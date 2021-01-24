@@ -1,10 +1,10 @@
 var Authorization = {
     'google':{
-        'url':'https://accounts.google.com/o/oauth2/v2/auth?',
+        'url':'https://accounts.google.com/o/oauth2/v2/auth',
         'params':{
             'client_id': '1053381465878-vb5nntqvopdnbag9f060pon9d7qh81j4.apps.googleusercontent.com',
-            'redirect_uri': 'https://kgayatri15.github.io/GithubIntegration/upload.html',
-            'scope': 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.appdata',
+            'redirect_uri':'https://kgayatri15.github.io/GithubIntegration/upload.html',//'http://127.0.0.1:5500/upload.html',
+            'scope': "https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive",
             'state': 'ActionSpaceEditor',
             'include_granted_scopes': 'true',
             'prompt':'consent',
@@ -12,7 +12,7 @@ var Authorization = {
         }
     },
     'github':{
-        'url':'https://github.com/login/oauth/authorize?',
+        'url':'https://github.com/login/oauth/authorize',
         'params':{
             'client_id':'9e81e0b5b9e1a677e973',
             'scope':'repo',
@@ -20,9 +20,8 @@ var Authorization = {
         }
     }
 }
-function oAuth(data){
-    console.log("In oAuth()");
-    var service = Authorization[data]['url'] + HttpService.buildEncodedUri(Authorization[data]['params']);
-    console.log(service);
+function oAuth(event,data){
+    event.preventDefault();console.log("In oAuth()");
+    var service = HttpService.urlBuilder(Authorization[data]['url'],Authorization[data]['params'])
     window.location.href = service;
 }
