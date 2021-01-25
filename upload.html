@@ -32,7 +32,7 @@
         </form>
         <br>
         <label >Enter name of file in Search field,click the search button then (upload file for update / delete that file)</label>
-        <form onsubmit="if(files.length > 0){buttonClick(event,'PUT');}else{alert('Enter fileName in search field and click Search file or the name of the file you entered not found');}">  
+        <form onsubmit="if(files.length > 0){buttonClick(event,'PATCH');}else{alert('Enter fileName in search field and click Search file or the name of the file you entered not found');}">  
             <br>
             <label for="update">Update:-</label>
             <input type="file" id="update" required>

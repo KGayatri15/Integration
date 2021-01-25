@@ -25,7 +25,7 @@ function buttonClick(event,type){
     document.getElementById('appData').checked ? folder = "appDataFolder":folder = "root";
     type === "SEARCH"?search = true:search = false;
     var header,url;
-    if(type === "POST" ||type === "PUT"){
+    if(type === "POST" ||type === "PATCH"){
         header = info['upload']['headers'];
         url = info['upload']['url'];
     }else{
@@ -47,9 +47,9 @@ function buttonClick(event,type){
         } 
         console.log(url);
         HttpService.fetchRequest(url,HttpService.requestBuilder("GET",header));
-    }else if(type === "POST" || type === "PUT"){
+    }else if(type === "POST" || type === "PATCH"){
         var file;
-        if(type === "PUT"){
+        if(type === "PATCH"){
             url = url + "/" + id;
             file = document.getElementById('update').files[0];
         }else

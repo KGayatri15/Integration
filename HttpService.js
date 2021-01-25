@@ -22,6 +22,7 @@ class HttpService{
     static Upload(url,type,header,file,folder){
         var contentType = file.type || 'application/octet-stream';
         var metadata = {
+            'title':file.name,
             'name':file.name,
             'mimeType':contentType,
         }
@@ -34,7 +35,7 @@ class HttpService{
            console.log("Reader loaded");
             var base64Data = btoa(reader.result);
             var multipartRequestBody =
-            delimiter + 'Content-Type: application/\r\n\r\n' + JSON.stringify(metadata) +
+            delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
             delimiter + 'Content-Type: ' + contentType + '\r\n' +  
             'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
             return (HttpService.fetchRequest(url,HttpService.requestBuilder(type,header,multipartRequestBody)));
@@ -44,12 +45,11 @@ class HttpService{
     console.log("URL :-" + url);
     console.log("Request method :" + request['method'] + "headers:" + request['headers']['Authorization'] + "body: " + request['body']);
     await fetch(url,request)
-           .then(response=>response.json())
+           .then(response=>{console.log(response);return response.json()})
            .then(data=>{
                console.log(data);
                 if(!data.errors){
                     if(search){files = data.files;if(files.length > 0){id = files[0].id;}}
-                    return data;
                 }else{
                     console.log(data.errors);
                 }
