@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Action Space Editor</title>
+        <script type="text/javascript" src="../js/HttpService.js"></script>
+        <script type="text/javascript" src="../js/json2Spreadsheet.js"></script>
+    </head>
+    <body>
+        <h1>Import JSON to Spreadsheet</h1>
+        <form onsubmit="convertToJSON(event)">
+            <label for="file">Upload a JSON file</label>
+            <input type="file" id="file" required>
+            <input type="submit" value="Submit">
+            <div id = "display"></div>
+        </form>
