@@ -39,9 +39,13 @@ function buttonClick(event,type){
             url = url + "?spaces=appDataFolder";
         if(type === "SEARCH"){
             var param = "q=name='" + document.getElementById('name').value + "'";
-            if(url.includes("?")){url = url +"&" + param;}
-            else{url = url +"?" + param;}
+            if(url.includes("?")){
+                url = url +"&" + param;
+            }else{
+                url = url +"?" + param;
+            }
         } 
+        console.log(url);
         HttpService.fetchRequest(url,HttpService.requestBuilder("GET",header));
     }else if(type === "POST" || type === "PUT"){
         var file;

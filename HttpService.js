@@ -41,7 +41,8 @@ class HttpService{
        }
     }
     static async fetchRequest(url,request){
-    console.log("URL ;-" + url + ";Request:- " + request);
+    console.log("URL :-" + url);
+    console.log("Request method :" + request['method'] + "headers:" + request['headers']['Authorization'] + "body: " + request['body']);
     await fetch(url,request)
            .then(response=>response.json())
            .then(data=>{
