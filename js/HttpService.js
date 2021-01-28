@@ -10,9 +10,7 @@ class HttpService{
         var request = {
             method:method,
             cache: 'no-cache',
-            withCredentials:true, 
-            credentials: 'include', 
-            headers:headers
+            headers:headers,
         }
         if(body !== undefined){
             request['body'] = body;

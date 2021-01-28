@@ -1,32 +1,35 @@
 var authorization;
+var arr = ['A','B','C','D','E','F','G','H','I','J','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+var info = {
+    'spreadsheet':{
+        'url':'https://sheets.googleapis.com/v4/spreadsheets',
+        'headers':{
+            'Accept':'application/json'
+        }
+    }
+}
 window.addEventListener('load',()=>{
     var service = HttpService.unbuildEndodedUri(window.location.href);
     authorization = service['token_type'] +" "+service['access_token'];
     console.log("Authorization:--- " + authorization);
 })
-function convertToJSON(event){
+function buttonClick(event){
     event.preventDefault();
-    var file = document.getElementById('file').files[0];
-    var sFilename = file.name;
-    // Create A File Reader HTML5
-    var reader = new FileReader();
-    reader.readAsBinaryString(file);
-    // Ready The Event For When A File Gets Selected
-    reader.onload = function(e) {
-        var data = e.target.result;
-        var cfb = XLS.CFB.read(data, {type: 'binary'});
-        var wb = XLS.parse_xlscfb(cfb);
-        // Loop Over Each Sheet
-        wb.SheetNames.forEach(function(sheetName) {
-            // Obtain The Current Row As CSV
-            var sCSV = XLS.utils.make_csv(wb.Sheets[sheetName]);   
-            var oJS = XLS.utils.sheet_to_row_object_array(wb.Sheets[sheetName]);   
-
-            document.getElementById('display').innerHTML(sCSV);
-            console.log(oJS);
-        });
-    };
-
-    // Tell JS To Start Reading The File.. You could delay this if desired
-   
+    var header = {
+        'Authorization':authorization,
+        'Accept': 'application/json',
+        'Content-Type':'application/json',
+    }
+    var body = {
+        "properties":{
+            "title":'SampleSchema'
+        },  
+    }
+    HttpService.fetchRequest(info['spreadsheet']['url'],HttpService.requestBuilder("POST",header,JSON.stringify(body)))
 }
+ // "range":"Sheet1!A1:" + arr[outputArray[0].length -1] + (outputArray.length),
+// "majorDimension":"ROWS",
+// "values":outputArray
+//var outputArray = mutate.Obj2(sample, []);
+// console.log(outputArray.length);
+// console.log(outputArray);
