@@ -47,7 +47,10 @@ class HttpService{
            .then(data=>{
                console.log(data);
                 if(!data.errors){
-                    if(search){files = data.files;if(files.length > 0){id = files[0].id;}}
+                    console.log(data.spreadsheetId + ":::" + assign);
+                    if(data.values != undefined){outputArray = data.values;}
+                    if(data.spreadsheetId != undefined){spreadsheetId = data.spreadsheetId;}
+                    if( data.files != undefined && search){files = data.files;if(files.length > 0){id = files[0].id;}}
                 }else{
                     console.log(data.errors);
                 }
