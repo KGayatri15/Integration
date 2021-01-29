@@ -17,15 +17,13 @@ class HttpService{
         }
         return request;
     }
-    static Upload(url,type,header,file,folder){
+    static Upload(url,type,header,file){
         var contentType = file.type || 'application/octet-stream';
         var metadata = {
             'title':file.name,
             'name':file.name,
             'mimeType':contentType,
         }
-        if(folder === "appDataFolder")
-                metadata['parents'] = ['appDataFolder'];//storing file in application Data folder
         console.log(metadata);
         var reader = new FileReader();
         reader.readAsBinaryString(file);
@@ -47,10 +45,8 @@ class HttpService{
            .then(data=>{
                console.log(data);
                 if(!data.errors){
-                    console.log(data.spreadsheetId + ":::" + assign);
-                    if(data.values != undefined){outputArray = data.values;}
-                    if(data.spreadsheetId != undefined){spreadsheetId = data.spreadsheetId;}
-                    if( data.files != undefined && search){files = data.files;if(files.length > 0){id = files[0].id;}}
+                    if(data.spreadsheetId != undefined && assign){spreadsheetId = data.spreadsheetId;}
+                    if( data.files != undefined && assign){files = data.files;if(files.length > 0){id = files[0].id;}}
                 }else{
                     console.log(data.errors);
                 }

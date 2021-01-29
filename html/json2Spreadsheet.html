@@ -2,17 +2,18 @@
 <html>
     <head>
         <title>Action Space Editor</title>
+        <script type="text/javascript" src="../js/Authorization.js"></script>
+        <script type="text/javascript" src="../js/HttpService.js"></script>
         <script type="text/javascript" src="../js/jsonSamples.js"></script>
         <script type="text/javascript" src="../js/mutate.js"></script>
-        <script type="text/javascript" src="../js/HttpService.js"></script>
         <script type="text/javascript" src="../js/json2Spreadsheet.js"></script>
     </head>
-    <body>
+    <body onload="Authorization.authToken(window.location.href);">
         <h1>Import JSON to Spreadsheet</h1>
-        <button onclick="buttonClick(event,'CREATE');">Create a spreadsheet</button>
+        <button onclick="JSON2Spreadsheet.handleActions(event,'CREATE');">Create a spreadsheet</button>
         <br><br>
-        <button onclick="buttonClick(event,'APPEND');">Insert values in the same spreadsheet</button>
+        <button onclick="JSON2Spreadsheet.handleActions(event,'APPEND');">Insert values in the same spreadsheet</button>
         <br><br>
-        <button onclick="buttonClick(event,'GET');">Get values in the same spreadsheet</button>
+        <button onclick="JSON2Spreadsheet.handleActions(event,'GET');">Get values in the same spreadsheet</button>
     </body>
 </html>

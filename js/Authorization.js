@@ -1,4 +1,4 @@
-var Authorization = {
+var Authorize = {
     'google':{
         'url':'https://accounts.google.com/o/oauth2/v2/auth',
         'params':{
@@ -32,8 +32,19 @@ var Authorization = {
         }
     }
 }
-function oAuth(event,data){
-    event.preventDefault();console.log("In oAuth()");
-    var service = HttpService.urlBuilder(Authorization[data]['url'],Authorization[data]['params'])
-    window.location.href = service;
+class Authorization{
+    static oAuth(event,data){
+        event.preventDefault();console.log("In oAuth()");
+        var service = HttpService.urlBuilder(Authorize[data]['url'],Authorize[data]['params']);
+        console.log(service);
+        window.location.href = service;
+
+    }
+
+
+    static authToken(uri){
+        var service = HttpService.unbuildEndodedUri(uri);
+        authorization = service['token_type'] +" "+service['access_token'];
+        console.log("Authorization:--- " + authorization);
+    }
 }
