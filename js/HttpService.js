@@ -12,48 +12,53 @@ class HttpService{
             cache: 'no-cache',
             headers:headers,
         }
-        if(body !== undefined){
+        if(body !== undefined)
+                request['body'] = body;              
             request['body'] = body;
-        }
+                request['body'] = body;              
         return request;
     }
-    static Upload(url,type,header,file){
-        var contentType = file.type || 'application/octet-stream';
-        var metadata = {
-            'title':file.name,
-            'name':file.name,
-            'mimeType':contentType,
-        }
-        console.log(metadata);
-        var reader = new FileReader();
-        reader.readAsBinaryString(file);
-        reader.onload = function(e){
-           console.log("Reader loaded");
+    static async FileUpload(file) {
+        return new Promise((resolve, reject) => {
+         var contentType = file.type || 'application/octet-stream';
+         var metadata = {
+                'title':file.name,
+                'name':file.name,
+                'mimeType':contentType,
+            }
+          const reader = new FileReader();
+          reader.readAsBinaryString(file);
+          reader.onload = () => {
             var base64Data = btoa(reader.result);
             var multipartRequestBody =
-            delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
-            delimiter + 'Content-Type: ' + contentType + '\r\n' +  
-            'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
-            return (HttpService.fetchRequest(url,HttpService.requestBuilder(type,header,multipartRequestBody)));
-       }
-    }
+                 delimiter + 'Content-Type: application/json\r\n\r\n' + JSON.stringify(metadata) +
+                 delimiter + 'Content-Type: ' + contentType + '\r\n' +
+                 'Content-Transfer-Encoding: base64\r\n' + '\r\n' + base64Data + close_delim;
+        
+            resolve(multipartRequestBody);
+        };
+          reader.onerror = error => reject(error);
+        });
+      }
     static async fetchRequest(url,request){
+    var res;
     console.log("URL :-" + url);
     console.log("Request method :" + request['method'] + "headers:" + request['headers']['Authorization'] + "body: " + request['body']);
     await fetch(url,request)
            .then(response=>{console.log(response);return response.json()})
            .then(data=>{
-               console.log(data);
-                if(!data.errors){
-                    if(data.spreadsheetId != undefined && assign){spreadsheetId = data.spreadsheetId;}
-                    if( data.files != undefined && assign){files = data.files;if(files.length > 0){id = files[0].id;}}
+                 console.log(data);
+                 if(!data.errors){
+                     res = data;
                 }else{
                     console.log(data.errors);
                 }
             })
             .catch(err=>{
                 console.log("Failed to make a request due to " + err);
+                new Error(err);
             })
+    return res;
     }
     static buildEncodedUri(request) {
         const response = [];

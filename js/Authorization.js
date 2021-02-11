@@ -40,8 +40,6 @@ class Authorization{
         window.location.href = service;
 
     }
-
-
     static authToken(uri){
         var service = HttpService.unbuildEndodedUri(uri);
         authorization = service['token_type'] +" "+service['access_token'];

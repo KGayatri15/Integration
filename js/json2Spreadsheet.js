@@ -1,4 +1,4 @@
-var authorization,spreadsheetId,range,assign = false;
+var authorization,spreadsheetId,range;
 var arr = ['A','B','C','D','E','F','G','H','I','J','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 var info = {
     'spreadsheet':{
@@ -10,20 +10,21 @@ var info = {
     },
 }
 class JSON2Spreadsheet{
-    static handleActions(event,type){
-        event.preventDefault();var body;
+    static async handleActions(event,type){
+        event.preventDefault();var body,response;
         var header = info['spreadsheet']['headers'];
         header['Authorization'] = authorization;
         var url = info['spreadsheet']['url'];
-        type === "CREATE"?assign = true:assign = false;
         switch(type){
             case "CREATE":{
                             body = {
                                 "properties":{
-                                    "title":'JSON2Spreadsheet'
+                                    "title":'Tables'
                                 },  
                             }
-                            HttpService.fetchRequest(url,HttpService.requestBuilder("POST",header,JSON.stringify(body)));
+                            response = await HttpService.fetchRequest(url,HttpService.requestBuilder("POST",header,JSON.stringify(body)));
+                            spreadsheetId = response.spreadsheetId;
+                            console.log(spreadsheetId);
                             break;
                         }
             case "APPEND":{
@@ -35,12 +36,15 @@ class JSON2Spreadsheet{
                                 "majorDimension":"ROWS",
                                 "values":output
                             }
-                            HttpService.fetchRequest(url,HttpService.requestBuilder("POST",header,JSON.stringify(body))); 
+                            response =await HttpService.fetchRequest(url,HttpService.requestBuilder("POST",header,JSON.stringify(body))); 
                             break;
             }
             case "GET":{
                             url = url + '/' + spreadsheetId + '/values/' + range;
-                            HttpService.fetchRequest(url,HttpService.requestBuilder("GET",header));
+                            response =await HttpService.fetchRequest(url,HttpService.requestBuilder("GET",header));
+                            var values = response.values;
+                            var json = mutate.arr2Object(values,values[0],{});
+                            console.log(json);
                             break;
             }
             default:alert("Spreadsheet is not defined,Create a spreadsheet initially.");
