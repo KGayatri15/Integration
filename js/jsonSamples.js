@@ -1,3 +1,29 @@
+var states = {
+    "0.":"start",
+    "shunya":"wait"
+}
+var actionflowSample = {
+        actionSteps:[
+            {
+            actionStepIndex:15,
+            method:checkUserExists,
+            state:states["shunya"],
+            },
+            {
+            actionStepIndex:16,
+            method:alertAboutSignUp,
+            state:states["0."],
+            condition:{
+                completedActionSteps:[1],
+            },
+            fromPrevious:{
+                exist:1
+            }
+             }
+        ]
+}
+function checkUserExists(){}
+function alertAboutSignUp(){}
 var sample = {
     "quiz": {
         "sport": {
