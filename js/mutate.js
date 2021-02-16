@@ -124,10 +124,10 @@ class mutate {
         }
         return output
     }
-    static async arr2Object (input ,parent,output){
+    static arr2Object (input ,parent,output){
         for(var j in input){ 
          var index;      
-          if(input[j][2] === parent[3]&&((input[j][5].includes(parent[5]) && parseInt(input[j][1]) === 1+ parseInt(parent[1]))||(input[j][1]=== "1"&&parent[1]==="d"))){
+          if(input[j][2] === parent[3]&&((input[j][5].includes(parent[5]) && parseInt(input[j][1]) === 1+ parseInt(parent[1]))||((input[j][1]=== "1"||input[j][1]===1)&&parent[1]==="d"))){
             if(parent[4] === "Array" && (input[j][4] === "String"|| input[j][4] === "Number")){
               output.unshift(input[j][3]);
             }else if(input[j][4] === "Object"){
