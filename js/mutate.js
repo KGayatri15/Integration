@@ -140,7 +140,7 @@ class mutate {
                 }
                 if(parent[4]=== "Array"){
                         var index = input[j][3].replace(input[j][2],"");
-                        output.unshift(obj);
+                        output[index] = obj;
                 }else
                         output[input[j][3]] = obj;
             }else if(input[j][4] === "Array"){
