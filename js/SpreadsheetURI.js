@@ -34,7 +34,7 @@ class JSON2Spreadsheet{
                             break;
                         }
             case "APPEND":{
-                            console.log("The JSON Input" + actionflowSample);
+                            console.log("The JSON Input" + schema2);
                             var output = mutate.Obj2(actionflowSample, []);
                             console.log(output);
                             await JSON2Spreadsheet.getRange(output);
