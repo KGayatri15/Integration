@@ -42,8 +42,8 @@ class HttpService{
       }
     static async fetchRequest(url,request){
     var res;
-    console.log("URL :-" + url);
-    console.log("Request method :" + request['method'] + "headers:" + request['headers']['Authorization'] + "body: " + request['body']);
+   // console.log("URL :-" + url);
+   // console.log("Request method :" + request['method'] + "headers:" + request['headers']['Authorization'] + "body: " + request['body']);
     await fetch(url,request)
            .then(response=>{console.log(response);return response.json()})
            .then(data=>{
@@ -56,7 +56,7 @@ class HttpService{
             })
             .catch(err=>{
                 console.log("Failed to make a request due to " + err);
-                new Error(err);
+             //   new Error(err);
             })
     return res;
     }

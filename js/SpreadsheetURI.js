@@ -9,7 +9,9 @@ var info = {
         }
     },
 }
-
+window.onload = (event) => {
+    Authorization.authToken(window.location.href);
+}
 class JSON2Spreadsheet{
     static async getRange(output){
         range = "Sheet1!A1:" + arr[output[0].length -1] + (output.length);
@@ -19,7 +21,6 @@ class JSON2Spreadsheet{
         var header = info['spreadsheet']['headers'];
         header['Authorization'] = authorization;
         var url = info['spreadsheet']['url'];
-        output = mutate.Obj2(actionflowSample, []);
         switch(type){
             case "CREATE":{
                             body = {

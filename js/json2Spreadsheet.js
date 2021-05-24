@@ -10,7 +10,7 @@ var info = {
     },
 }
 
-window.onload = () => {
+window.onload = (event) => {
     Authorization.authToken(window.location.href);
     console.log("SpreadsheetID" + localStorage.getItem(authorization));
     if(localStorage.getItem(authorization)=== null)
