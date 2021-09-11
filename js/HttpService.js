@@ -18,14 +18,17 @@ class HttpService{
                 request['body'] = body;              
         return request;
     }
-    static async FileUpload(file) {
+    static async FileUpload(file,appDataFolder) {
         return new Promise((resolve, reject) => {
          var contentType = file.type || 'application/octet-stream';
          var metadata = {
                 'title':file.name,
                 'name':file.name,
                 'mimeType':contentType,
-            }
+        }
+        if(appDataFolder){
+            metadata['parents'] = ['appDataFolder'];
+        }
           const reader = new FileReader();
           reader.readAsBinaryString(file);
           reader.onload = () => {

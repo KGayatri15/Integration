@@ -1,7 +1,7 @@
 var authorization,id,files = [];
 var info = {
     "others":{
-            "url":"https://www.googleapis.com/drive/v3/files",
+            "url":"https://www.googleapis.com/drive/v3/files?spaces=appDataFolder",
             "headers":{
                 'Accept':'application/json'
             }
@@ -14,7 +14,7 @@ var info = {
             },
     },
 }
-class GDrive{
+class AppDataFolder{
 static async HandleRequest(event,type){
     event.preventDefault();var header,url,response;
     if(type === "POST" ||type === "PATCH"){
@@ -31,7 +31,7 @@ static async HandleRequest(event,type){
                         break;
                     }
         case "SEARCH":{
-                        url =  url + "?q=name='" + document.getElementById('name').value + "'";
+                        url =  url + "&q=name='" + document.getElementById('name').value + "'";
                         response =await HttpService.fetchRequest(url,HttpService.requestBuilder("GET",header));
                         if(response.files.length > 0)
                             files = response.files;id = files[0].id;
@@ -39,13 +39,13 @@ static async HandleRequest(event,type){
                         break;
                     }
         case "POST":{   
-                        var body = await HttpService.FileUpload(document.getElementById('file').files[0],false);
+                        var body = await HttpService.FileUpload(document.getElementById('file').files[0],true);
                         response = await HttpService.fetchRequest(url,HttpService.requestBuilder(type,header,body));
                         break;
                     }
         case "PATCH":{
                         url = url + "/" + id;
-                        var body = await HttpService.FileUpload(document.getElementById('update').files[0],false);
+                        var body = await HttpService.FileUpload(document.getElementById('update').files[0],true);
                         response = await HttpService.fetchRequest(url,HttpService.requestBuilder(type,header,body));
                         break;
                     }

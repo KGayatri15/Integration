@@ -10,7 +10,7 @@ var info = {
     },
 }
 window.onload = (event) => {
-    Authorization.authToken(window.location.href);
+    Authenticate.authToken(window.location.href);
 }
 class JSON2Spreadsheet{
     static async getRange(output){
